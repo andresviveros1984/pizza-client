@@ -21,6 +21,7 @@ useEffect(()=>{
 
   return (
     <div className="App">
+      {/* add header here */}
       <Routes>
         <Route path='/' element={<Home data ={pizzas.data} />} />
         <Route path='/:id' element={<PizzaDetails />} />
