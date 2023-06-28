@@ -8,7 +8,7 @@ const Header = ({ data }) => {
   const [searchPizza, setSearchPizza] = useState("");
   const [inputText, setInputText] = useState("");
   // const [displayList,setDisplayList] = useState(false)
-
+  
 
   const handleDropDownMenu = () => {
     let uL = document.querySelector('#myUL');
