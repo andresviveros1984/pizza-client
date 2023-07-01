@@ -5,6 +5,8 @@ import {Routes,Route,Link} from 'react-router-dom';
 import PizzaDetails from './components/PizzaDetails';
 import Order from './components/Order';
 import Success from './components/Success';
+import AdminPage from './components/AdminPage';
+
 function App() {
 
 const [pizzas,setPizzas] = useState([]);
@@ -27,6 +29,7 @@ useEffect(()=>{
         <Route path='/:id' element={<PizzaDetails />} />
         <Route path='/order' element={<Order pizzas={pizzas}/>}/>
         <Route path={'/success/:id'} element={<Success />}/>
+        <Route path={'/admin'} element={<AdminPage />} />
       </Routes>
     
     </div>
