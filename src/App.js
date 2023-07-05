@@ -6,6 +6,7 @@ import PizzaDetails from './components/PizzaDetails';
 import Order from './components/Order';
 import Success from './components/Success';
 import AdminPage from './components/AdminPage';
+import OrderDetails from './components/OrderDetails';
 
 function App() {
 
@@ -30,6 +31,7 @@ useEffect(()=>{
         <Route path='/order' element={<Order pizzas={pizzas}/>}/>
         <Route path={'/success/:id'} element={<Success />}/>
         <Route path={'/admin'} element={<AdminPage />} />
+        <Route path={'/order/:id'} element={<OrderDetails />} />
       </Routes>
     
     </div>

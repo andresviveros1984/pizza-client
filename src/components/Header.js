@@ -33,7 +33,7 @@ const Header = ({ data }) => {
       }
 
     }
-
+//refactor using filter instead
   }
 
 
