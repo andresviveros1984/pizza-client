@@ -31,7 +31,7 @@ useEffect(()=>{
         <Route path='/order' element={<Order pizzas={pizzas}/>}/>
         <Route path={'/success/:id'} element={<Success />}/>
         <Route path={'/admin'} element={<AdminPage />} />
-        <Route path={'/order/:id'} element={<OrderDetails />} />
+        <Route path={'/order/:id'} element={<OrderDetails pizzas={pizzas}/>} />
       </Routes>
     
     </div>
