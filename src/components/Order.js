@@ -35,7 +35,7 @@ const handleSelect = (e) =>{
   }else{
     setDisplayPrice(true)
   };
-  setFormData({...formData,pizza:filteredPizza[0].name})
+  setFormData({...formData,pizza:filteredPizza[0].id})
 }
 
 const postForm = async () =>{

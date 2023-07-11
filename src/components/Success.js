@@ -35,7 +35,7 @@ const Success = ({ formdata }) => {
       {Object.keys(order).length > 1 ? (<div>
         <h1>RECEIPT No: {id}</h1>
         <p>Order successfull</p>
-        <h2>{order.data.pizza}</h2>
+        <h2>{order.data.pizza} Pizza</h2>
         <p>Full name: {order.data.fname} {order.data.lname}</p>
         <p>Delivery address: {order.data.address}</p>
         <p>Please pay: {order.data.price}</p>
