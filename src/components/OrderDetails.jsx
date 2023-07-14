@@ -13,26 +13,28 @@ const OrderDetails = ({ pizzas }) => {
   const [errorMessage, setErrorMessage] = useState('');
 
   const [orderDetail, setOrderDetail] = useState({});
+  const [disabled,setDisabled] = useState(true);
 
-  const getOrderDetails = async () => {
-    const response = await fetch(`/orders/${id}`);
-    const data = await response.json();
-
-    setOrderDetail(data.data);
-    // setSelectedPizza(data.data.pizza)
-  }
-
-  const getPizzaById = async () => {
-    const response = await fetch(`/pizzas/${orderDetail.pizza}`);
+  const getPizzaById = async (id) => {
+    const response = await fetch(`/pizzas/${id}`);
     const pizzaData = await response.json();
+    console.log(pizzaData)
     setSelectedPizza(pizzaData.data);
   }
 
 
+  const getOrderDetails = async () => {
+    const response = await fetch(`/orders/${id}`);
+    const data = await response.json();
+    setOrderDetail(data.data);
+    getPizzaById(data.data.pizza)
+  }
+
+ 
   useEffect(() => {
     getOrderDetails()
-    getPizzaById()//not getting this
-  },[])
+    // getPizzaById()
+  }, [])
 
 
 
@@ -52,46 +54,51 @@ const OrderDetails = ({ pizzas }) => {
     } else {
       setDisplayPrice(true)
     };
-    // setFormData({...formData,pizza:filteredPizza[0].name})
+
   }
+
+
 
 
   return (
     <FormArea className="form-area">
-      {console.log(orderDetail)}
-      <form >
-        <label htmlFor="fname">First Name: <input type="text" id='fname' name='fname' placeholder='fabio' disabled value={orderDetail.fname} /></label>
-        <label htmlFor="sname">Surname: <input type="text" id='lname' name='lname' placeholder='lopez' disabled value={orderDetail.lname} /></label>
-        <label htmlFor="address">Address: <input type="text" id='address' name='address' placeholder='London Town' disabled value={orderDetail.address} /></label>
-        <label htmlFor="email">Email: <input type="email" id='email' name='email' placeholder='fabio.lopez@email.com' disabled value={orderDetail.email} /></label>
-        <label htmlFor="tel">Telephone <input type="tel" id='phone' name='phone' placeholder='111-111-1111' disabled value={orderDetail.phone} /></label>
+      {console.log(selectedPizza)}
+      {Object.keys(selectedPizza).length > 1 ? (
+        <form >
+          <label htmlFor="fname">First Name: <input type="text" id='fname' name='fname' placeholder='fabio' disabled value={orderDetail.fname} /></label>
+          <label htmlFor="sname">Surname: <input type="text" id='lname' name='lname' placeholder='lopez' disabled value={orderDetail.lname} /></label>
+          <label htmlFor="address">Address: <input type="text" id='address' name='address' placeholder='London Town' value={orderDetail.address} disabled/></label>
+          <label htmlFor="email">Email: <input type="email" id='email' name='email' placeholder='fabio.lopez@email.com'  value={orderDetail.email} disabled /></label>
+          <label htmlFor="tel">Telephone <input type="tel" id='phone' name='phone' placeholder='111-111-1111' disabled value={orderDetail.phone} /></label>
 
-        <label htmlFor="pizzas">
-          Pizza:
-          <select name="pizza" id="" onChange={handleSelect} disabled >
-            <option value={orderDetail.pizza}>{selectedPizza.name}</option>
-            {pizzas.status == 200 ? pizzas.data.map(pizza => {
-              return (
-                <option value={pizza.id}>{pizza.name}</option>
-              )
-            }) : <h1>Loading</h1>}
-          </select>
-        </label>
-            
-        {selectedPizza && (<label htmlFor="price">Price: {Object.keys(selectedPizza.price).map(p => {
-          return (
-            <div className='radioarea'>
-              <input type="radio" name='price' value={orderDetail.price} checked/>
-              <p>{p}</p>
-              <p>{selectedPizza.price[p]}</p>
-            </div>
-          )
-        })}</label>)}
-        {errorMessage.length > 0 && <div className='errormessages'>
-          <p>{errorMessage}</p>
-        </div>}
-        <button type='submit'>Update Order</button>
-      </form>
+          <label htmlFor="pizzas">
+            Pizza:
+            <select name="pizza" id="" onChange={handleSelect} disabled={disabled} >
+              <option value={orderDetail.pizza}>{selectedPizza.name}</option>
+              {pizzas.status == 200 ? pizzas.data.map(pizza => {
+                return (
+                  <option value={pizza.id}>{pizza.name}</option>
+                )
+              }) : <h1>Loading</h1>}
+            </select>
+          </label>
+            {console.log(orderDetail)}
+          <label htmlFor="price">Price: {Object.keys(selectedPizza.price).map(p => {
+            return (
+              <div className='radioarea'>
+                <input type="radio" name='price' value={selectedPizza.price[p]} checked={selectedPizza.price[p] === orderDetail.price} disabled={disabled}/>
+                <p>{p}</p>
+                <p>{selectedPizza.price[p]}</p>
+              </div>
+            )
+          })}</label>
+          {errorMessage.length > 0 && <div className='errormessages'>
+            <p>{errorMessage}</p>
+          </div>}
+          <button type='submit'>Update Order</button>
+        </form>
+      ) : (<h1>Loading</h1>)}
+
     </FormArea>
   )
 
