@@ -40,7 +40,7 @@ const Header = ({ data }) => {
 
   return (
     <HeaderContainer>
-      <img src={pizzaLogo} alt="pizza logo" />
+      <Link to={'/'}><img src={pizzaLogo} alt="pizza logo" /></Link>
       <h1>FABIO'S PIZZA STORE</h1>
       <div id='input-li-container'>
         <input type="text" id='myInput' placeholder='Search Pizzas' onClick={() => handleDropDownMenu()} onChange={(e) => setInputText(e.target.value)} onKeyUp={(e) => handleSearch(e)} />
