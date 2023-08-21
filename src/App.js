@@ -1,40 +1,46 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import Home from './components/Home';
-import {Routes,Route,Link} from 'react-router-dom';
+import { Routes, Route, Link } from 'react-router-dom';
 import PizzaDetails from './components/PizzaDetails';
 import Order from './components/Order';
 import Success from './components/Success';
 import AdminPage from './components/AdminPage';
 import OrderDetails from './components/OrderDetails';
+import Header from "./components/Header"
 
 function App() {
 
-const [pizzas,setPizzas] = useState([]);
+  const [pizzas, setPizzas] = useState([]);
 
-const fetchPizzas = async () =>{
-  const response  = await fetch('/pizzas');
-  const data = await response.json();
-  setPizzas(data);
-}
+  const fetchPizzas = async () => {
+    const response = await fetch('/pizzas');
+    const data = await response.json();
+    setPizzas(data);
+  }
 
-useEffect(()=>{
-  fetchPizzas()
-},[])
+  useEffect(() => {
+    fetchPizzas()
+  }, [])
 
   return (
+
     <div className="App">
-      {/* add header here */}
+      <Header data={pizzas.data} />
+
       <Routes>
-        <Route path='/' element={<Home data ={pizzas.data} />} />
+        <Route path='/' element={<Home data={pizzas.data} />} />
         <Route path='/:id' element={<PizzaDetails />} />
-        <Route path='/order' element={<Order pizzas={pizzas}/>}/>
-        <Route path={'/success/:id'} element={<Success />}/>
+        <Route path='/order' element={<Order pizzas={pizzas} />} />
+        <Route path={'/success/:id'} element={<Success />} />
         <Route path={'/admin'} element={<AdminPage />} />
-        <Route path={'/order/:id'} element={<OrderDetails pizzas={pizzas}/>} />
+        <Route path={'/order/:id'} element={<OrderDetails pizzas={pizzas} />} />
       </Routes>
-    
+
     </div>
+
+
+
   );
 }
 //create pizza details page

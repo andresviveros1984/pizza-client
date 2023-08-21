@@ -95,7 +95,8 @@ const OrderDetails = ({ pizzas }) => {
           {errorMessage.length > 0 && <div className='errormessages'>
             <p>{errorMessage}</p>
           </div>}
-          <button type='submit'>Update Order</button>
+          <button onClick={"change the state using the disable variable"} type='submit'>Update Order</button>
+          <button>Save Changes</button>
         </form>
       ) : (<h1>Loading</h1>)}
 
