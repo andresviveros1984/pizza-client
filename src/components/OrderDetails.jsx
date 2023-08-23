@@ -8,18 +8,19 @@ const OrderDetails = ({ pizzas }) => {
 
   let { id } = useParams();
   const [selectedPizza, setSelectedPizza] = useState({});
-  const [displayPrice, setDisplayPrice] = useState(false);
 
   const [errorMessage, setErrorMessage] = useState('');
 
   const [orderDetail, setOrderDetail] = useState({});
   const [disabled,setDisabled] = useState(true);
 
+  const [updatedFormData,setupdatedFormData] = useState({})
+
   const getPizzaById = async (id) => {
     const response = await fetch(`/pizzas/${id}`);
     const pizzaData = await response.json();
-    console.log(pizzaData)
     setSelectedPizza(pizzaData.data);
+    setupdatedFormData(pizzaData.data)
   }
 
 
@@ -36,10 +37,6 @@ const OrderDetails = ({ pizzas }) => {
     // getPizzaById()
   }, [])
 
-
-
-
-
   const handleSelect = (e) => {
     let pizzaId = e.target.value;
     let filteredPizza = pizzas.data.filter(pzza => {
@@ -49,22 +46,18 @@ const OrderDetails = ({ pizzas }) => {
     })
 
     setSelectedPizza(filteredPizza[0]);
-    if (pizzaId === "") {
-      setDisplayPrice(false)
-    } else {
-      setDisplayPrice(true)
-    };
-
   }
 
-
+const handleUpdateOrder = ()=>{
+  setDisabled(false)
+}
 
 
   return (
-    <FormArea className="form-area">
-      {console.log(selectedPizza)}
+    <FormArea className="form-area" >
       {Object.keys(selectedPizza).length > 1 ? (
         <form >
+          {console.log(updatedFormData)}
           <label htmlFor="fname">First Name: <input type="text" id='fname' name='fname' placeholder='fabio' disabled value={orderDetail.fname} /></label>
           <label htmlFor="sname">Surname: <input type="text" id='lname' name='lname' placeholder='lopez' disabled value={orderDetail.lname} /></label>
           <label htmlFor="address">Address: <input type="text" id='address' name='address' placeholder='London Town' value={orderDetail.address} disabled/></label>
@@ -82,11 +75,10 @@ const OrderDetails = ({ pizzas }) => {
               }) : <h1>Loading</h1>}
             </select>
           </label>
-            {console.log(orderDetail)}
           <label htmlFor="price">Price: {Object.keys(selectedPizza.price).map(p => {
             return (
               <div className='radioarea'>
-                <input type="radio" name='price' value={selectedPizza.price[p]} checked={selectedPizza.price[p] === orderDetail.price} disabled={disabled}/>
+                <input type="radio" name='price' checked={selectedPizza.price[p] === orderDetail.price} disabled={disabled} onChange={()=> ""}/>
                 <p>{p}</p>
                 <p>{selectedPizza.price[p]}</p>
               </div>
@@ -95,11 +87,10 @@ const OrderDetails = ({ pizzas }) => {
           {errorMessage.length > 0 && <div className='errormessages'>
             <p>{errorMessage}</p>
           </div>}
-          <button onClick={"change the state using the disable variable"} type='submit'>Update Order</button>
-          <button>Save Changes</button>
+          {!disabled && (<button id='save-changes-btn' type='submit'>Save Changes</button>)}
         </form>
       ) : (<h1>Loading</h1>)}
-
+        <button onClick={handleUpdateOrder} >Update Order</button>
     </FormArea>
   )
 
@@ -112,6 +103,7 @@ justify-content:center;
 align-items:center;
 height:100vh;
 width:100vw;
+flex-direction:column;
 form{
  
   border-radius:20px;
@@ -162,6 +154,8 @@ button {
   font-weight:bolder;
   color:red;
 }
+
+
 
 `
 
