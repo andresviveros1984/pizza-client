@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams,useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 
 
@@ -8,20 +8,17 @@ const OrderDetails = ({ pizzas }) => {
 
   let { id } = useParams();
   const [selectedPizza, setSelectedPizza] = useState({});
-
   const [errorMessage, setErrorMessage] = useState('');
-
   const [orderDetail, setOrderDetail] = useState({});
   const [disabled,setDisabled] = useState(true);
-
   const [newOrder,setNewOrder] = useState({})
+  const navigate = useNavigate()
+
 
   const getPizzaById = async (id) => {
     const response = await fetch(`/pizzas/${id}`);
     const pizzaData = await response.json();
     setSelectedPizza(pizzaData.data);
-    // setupdatedFormData(pizzaData.data)
-    
   }
 
 
@@ -69,7 +66,18 @@ const handlePrice = (event) => {
 
 
 const handleSubmit = async () => {
-  fetch(`/orders/${orderDetail.id}`)
+  const response  = await fetch(`/orders/${orderDetail.id}`, {
+    method: "POST",
+    headers: {
+      "content-Type":"application/json",
+    },
+    body:JSON.stringify({newOrder:newOrder})
+  })
+  const received =  await response.json()
+  
+  if(received.status == 200){
+    navigate(`/admin`)
+  }
 }
 
   return (
