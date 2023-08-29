@@ -57,6 +57,7 @@ const handleUpdateOrder = ()=>{
     price:orderDetail.price,
     pizza:orderDetail.pizza
   })
+  
 }
 
 
@@ -67,7 +68,7 @@ const handlePrice = (event) => {
 
 const handleSubmit = async () => {
   const response  = await fetch(`/orders/${orderDetail.id}`, {
-    method: "POST",
+    method: "PATCH",
     headers: {
       "content-Type":"application/json",
     },
@@ -83,9 +84,9 @@ const handleSubmit = async () => {
   return (
     <FormArea className="form-area" >
       <p>Order : {orderDetail.id}</p>
+      {console.log(newOrder)}
       {Object.keys(selectedPizza).length > 1 ? (
         <form onSubmit={handleSubmit}>
-          {console.log(selectedPizza.price["arge"])}
           <label htmlFor="fname">First Name: <input type="text" id='fname' name='fname' placeholder='fabio' disabled value={orderDetail.fname} /></label>
           <label htmlFor="sname">Surname: <input type="text" id='lname' name='lname' placeholder='lopez' disabled value={orderDetail.lname} /></label>
           <label htmlFor="address">Address: <input type="text" id='address' name='address' placeholder='London Town' value={orderDetail.address} disabled/></label>
