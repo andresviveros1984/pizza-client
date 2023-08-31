@@ -66,7 +66,8 @@ const handlePrice = (event) => {
 }
 
 
-const handleSubmit = async () => {
+const handleSubmit = async (e) => {
+  e.preventDefault();
   const response  = await fetch(`/orders/${orderDetail.id}`, {
     method: "PATCH",
     headers: {
@@ -75,16 +76,17 @@ const handleSubmit = async () => {
     body:JSON.stringify({newOrder:newOrder})
   })
   const received =  await response.json()
-  
+  console.log(received)
   if(received.status == 200){
-    navigate(`/admin`)
+    navigate('/admin')
   }
+  
 }
 
   return (
     <FormArea className="form-area" >
       <p>Order : {orderDetail.id}</p>
-      {console.log(newOrder)}
+    
       {Object.keys(selectedPizza).length > 1 ? (
         <form onSubmit={handleSubmit}>
           <label htmlFor="fname">First Name: <input type="text" id='fname' name='fname' placeholder='fabio' disabled value={orderDetail.fname} /></label>
