@@ -62,6 +62,8 @@ const Header = ({ data }) => {
 export default Header;
 
 const HeaderContainer = styled.div`
+  /* position:fixed; */
+  border:2px solid green;
   display:flex;
   justify-content:space-between;
   align-items:center;
@@ -74,6 +76,7 @@ const HeaderContainer = styled.div`
   img{
     height:100px;
     width:100px;
+    margin-left:10px;
   }
   #myInput {
     font-size:16px;

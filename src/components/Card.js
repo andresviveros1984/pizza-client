@@ -8,10 +8,9 @@ const Card = ({ pizza }) => {
     <Container>
       <img src={pizza.src} alt="#" />
       <div className="info">
-        <h1>{pizza.name}</h1>
-        <p>{pizza.price.Small}</p>
-        <p>{pizza.toppings}</p>
-        <Link to={`/${pizza.id}`}>More Info</Link>
+        <h5>{pizza.name}</h5>
+        <p>{pizza.description}</p>
+        <StyledLink to={`/${pizza.id}`}>More Info</StyledLink>
       </div>
     </Container>
   )
@@ -20,11 +19,33 @@ const Card = ({ pizza }) => {
 export default Card;
 
 const Container = styled.div`
-  
-  border:1px solid black;
+  border-radius:20px;
+  background-color:#5ae021;
+  width:300px;
+  height:400px;
   img{
-    height:100px;
-    width:100px;
+    border-radius:10px;
+    height:200px;
+    width:100%;
   }
-  padding:10px;
+  margin:50px;
+
+  .info{
+    /* background-color:#f77673; */
+    padding:10px 20px;
+    text-align:left;
+    height:180px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-around;
+    align-items:flex-start;
+  }
+
 `;
+
+const StyledLink = styled(Link)`
+  text-decoration:none;
+  background-color:#c95553;
+  padding:10px 20px;
+  color:white;
+`
