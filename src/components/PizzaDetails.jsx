@@ -46,11 +46,12 @@ const PizzaDetails = () => {
     </PizzaDetailsContainer>
   )
 };
-//
+//create for this, image left side, button right side
 export default PizzaDetails
 
 
 const PizzaDetailsContainer = styled.div `
+  padding:2rem;
   img{
     height:300px;
     width:300px;

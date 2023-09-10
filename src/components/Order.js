@@ -110,9 +110,11 @@ const handleSubmit = (e) =>{
 export default Order;
 
 const FormArea = styled.div `
+
+  padding:2rem 0;
   display:flex;
   justify-content:center;
-  align-items:center;
+  align-items:flex-start;
   height:100vh;
   width:100vw;
   form{
@@ -125,7 +127,6 @@ const FormArea = styled.div `
     display:flex;
     flex-direction:column;
     justify-content:space-evenly;
-    /* align-items:flex-start; */
     align-items:center;
     padding:10px;
 

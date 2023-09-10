@@ -129,8 +129,9 @@ const handleSubmit = async (e) => {
 export default OrderDetails;
 
 const FormArea = styled.div`
+
 display:flex;
-justify-content:center;
+justify-content:flex-start;
 align-items:center;
 height:100vh;
 width:100vw;
@@ -138,14 +139,14 @@ flex-direction:column;
 form{
  
   border-radius:20px;
-  box-shadow:10px 10px 5px lightblue;
-  border:1px solid lightblue;
+  /* box-shadow:10px 10px 5px lightblue; */
+  box-shadow:10px 10px 5px #f77673;
+  border:1px solid #75f763;
   width:500px;
   height:max-content;
   display:flex;
   flex-direction:column;
   justify-content:space-evenly;
-  /* align-items:flex-start; */
   align-items:center;
   padding:10px;
 
@@ -153,7 +154,7 @@ form{
     width:260px;
     display:flex;
     justify-content:space-between;
-    padding:20px 30px;
+    padding:1rem;
   }
   input,select {
     width:120px;
@@ -165,7 +166,7 @@ form{
 button {
   margin:0 auto;
   padding:10px;
-  border-radius:10px;
+  border-radius:20px;
   border:1px solid lightblue;
   background-color:white;
 }

@@ -8,6 +8,7 @@ import Success from './components/Success';
 import AdminPage from './components/AdminPage';
 import OrderDetails from './components/OrderDetails';
 import Header from "./components/Header"
+import { styled } from 'styled-components';
 
 function App() {
 
@@ -27,16 +28,16 @@ function App() {
 
     <div className="App">
       <Header data={pizzas.data} />
-
-      <Routes>
-        <Route path='/' element={<Home data={pizzas.data} />} />
-        <Route path='/:id' element={<PizzaDetails />} />
-        <Route path='/order' element={<Order pizzas={pizzas} />} />
-        <Route path={'/success/:id'} element={<Success />} />
-        <Route path={'/admin'} element={<AdminPage />} />
-        <Route path={'/order/:id'} element={<OrderDetails pizzas={pizzas} />} />
-      </Routes>
-
+      <Main>
+        <Routes>
+          <Route path='/' element={<Home data={pizzas.data} />} />
+          <Route path='/:id' element={<PizzaDetails />} />
+          <Route path='/order' element={<Order pizzas={pizzas} />} />
+          <Route path={'/success/:id'} element={<Success />} />
+          <Route path={'/admin'} element={<AdminPage />} />
+          <Route path={'/order/:id'} element={<OrderDetails pizzas={pizzas} />} />
+        </Routes>
+      </Main>
     </div>
 
 
@@ -47,3 +48,7 @@ function App() {
 //more info will be a link
 //use params to get id from route when pressing more info
 export default App;
+
+const Main = styled.main `
+  padding-top:7rem;
+`

@@ -40,7 +40,7 @@ const Header = ({ data }) => {
 
   return (
     <HeaderContainer>
-      <Link to={'/'}><img src={pizzaLogo} alt="pizza logo" /></Link>
+      <StyledLink to={'/'}><img src={pizzaLogo} alt="pizza logo" /></StyledLink>
       <h1>FABIO'S PIZZA STORE</h1>
       <div id='input-li-container'>
         <input type="text" id='myInput' placeholder='Search Pizzas' onClick={() => handleDropDownMenu()} onChange={(e) => setInputText(e.target.value)} onKeyUp={(e) => handleSearch(e)} />
@@ -62,13 +62,19 @@ const Header = ({ data }) => {
 export default Header;
 
 const HeaderContainer = styled.div`
-  /* position:fixed; */
-  border:2px solid green;
+background-color:green;
+  height:7rem;
+  position:fixed;
+  top:0;
+  right:0;
+  left:0;
   display:flex;
   justify-content:space-between;
   align-items:center;
   input{
     margin-right:10px;
+    width:8rem;
+    padding:1rem 1.5rem;
   }
   h1{
     margin-left:10px;
@@ -98,19 +104,26 @@ const HeaderContainer = styled.div`
     border:1px solid #ddd;
     margin-top:-1px;
     text-decoration:none;
-    
+    padding:0.5rem 1.5rem;
+    width:8rem;
   }
 
   .ul-container {
+    background-color:white;
     display:flex;
     flex-direction:column;
     position:absolute;
+    
     
   }
 
   #myUL li:hover{
     background-color:#ec2e2b;
   }
+
+  /* input{
+    padding:1rem 1.5rem;
+  } */
 
 `
 const StyledLink = styled(Link)`
