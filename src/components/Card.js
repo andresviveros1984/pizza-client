@@ -20,7 +20,8 @@ export default Card;
 
 const Container = styled.div`
   border-radius:20px;
-  background-color:#5ae021;
+  /* background-color:#5ae021; */
+  background-color:green;
   width:300px;
   height:400px;
   img{
@@ -45,7 +46,7 @@ const Container = styled.div`
 
 const StyledLink = styled(Link)`
   text-decoration:none;
-  background-color:#c95553;
+  background-color:#ea221e;
   padding:10px 20px;
   color:white;
 `
