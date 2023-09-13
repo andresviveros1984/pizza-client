@@ -32,15 +32,18 @@ const PizzaDetails = () => {
             <h2>TOPPINGS</h2>
             <p>{pizzaDetail.data.toppings}</p>
             <h2>Price</h2>
+            
             {Object.entries(pizzaDetail.data.price).map(price => {
               return (
                 <p><span>{price[0]}</span> {price[1]}</p>
               )
             })}
+            <div id="btn-container">
+              <Link to={'/order'}>Order Now</Link>
+            </div>
+            
           </div>
-
-          <Link to={'/order'}>Order Now</Link>
-
+              
         </div>
 
       ) : <h1>Loading</h1>}
@@ -54,27 +57,26 @@ export default PizzaDetails
 
 
 const PizzaDetailsContainer = styled.div`
-  border:1px solid green;
   
   padding:2rem;
   
 
   .container{
-    border:1px solid red;
     display:flex;
+    justify-content:center;
+    /* justify-content:space-around; */
   }
 
   .image{
     
-    background-color:green;
-    border:1px solid blue;
+    border:1px solid green;
     height:500px;
     width:500px;
     display:flex;
   } 
 
   img{
-    border-radius:0 300px 30px 0;
+    /* border-radius:0 300px 80px 0; */
     /* height:300px;
     width:300px; */
     height:100%;
@@ -82,6 +84,13 @@ const PizzaDetailsContainer = styled.div`
   }
 
   .pizza-detail{
-    border:1px solid blue;
+    background-color:white;
+    border:1px solid green;
+    border-radius:0 95px 80px 0;
+    /* border-radius:20px; */
+    box-shadow:10px 10px 5px #f77673;
   }
+
+
+ 
 `

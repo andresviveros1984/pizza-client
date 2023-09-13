@@ -121,7 +121,7 @@ const FormArea = styled.div `
    
     border-radius:20px;
     box-shadow:10px 10px 5px #f77673;
-    border:1px solid #75f763;
+    border:1px solid green;
     width:500px;
     height:max-content;
     display:flex;

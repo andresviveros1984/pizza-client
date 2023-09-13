@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams,useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 
 
@@ -10,8 +10,8 @@ const OrderDetails = ({ pizzas }) => {
   const [selectedPizza, setSelectedPizza] = useState({});
   const [errorMessage, setErrorMessage] = useState('');
   const [orderDetail, setOrderDetail] = useState({});
-  const [disabled,setDisabled] = useState(true);
-  const [newOrder,setNewOrder] = useState({})
+  const [disabled, setDisabled] = useState(true);
+  const [newOrder, setNewOrder] = useState({})
   const navigate = useNavigate()
 
 
@@ -29,7 +29,7 @@ const OrderDetails = ({ pizzas }) => {
     getPizzaById(data.data.pizza)
   }
 
- 
+
   useEffect(() => {
     getOrderDetails()
     // getPizzaById()
@@ -43,56 +43,61 @@ const OrderDetails = ({ pizzas }) => {
       )
     })
     setSelectedPizza(filteredPizza[0]);
-    setNewOrder({...newOrder,pizza:filteredPizza[0].id})
+    setNewOrder({ ...newOrder, pizza: filteredPizza[0].id })
   }
 
-const handleUpdateOrder = ()=>{
-  setDisabled(false)
-  setNewOrder({
-    fname:orderDetail.fname,
-    lname:orderDetail.lname,
-    address:orderDetail.address,
-    email:orderDetail.email,
-    phone:orderDetail.phone,
-    price:orderDetail.price,
-    pizza:orderDetail.pizza
-  })
-  
-}
+  const handleUpdateOrder = () => {
+    setDisabled(false)
+    setNewOrder({
+      fname: orderDetail.fname,
+      lname: orderDetail.lname,
+      address: orderDetail.address,
+      email: orderDetail.email,
+      phone: orderDetail.phone,
+      price: orderDetail.price,
+      pizza: orderDetail.pizza
+    })
+    // const updateBTN = document.getElementById('#update-btn');
+    // updateBTN.remove();
+    // setTimeout(()=>{
+    //   updateBTN.style.display ='hidden';
+    // },5000)
 
-
-const handlePrice = (event) => {
-  setNewOrder({...newOrder,price:event.target.value})
-}
-
-
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  const response  = await fetch(`/orders/${orderDetail.id}`, {
-    method: "PATCH",
-    headers: {
-      "content-Type":"application/json",
-    },
-    body:JSON.stringify({newOrder:newOrder})
-  })
-  const received =  await response.json()
-  console.log(received)
-  if(received.status == 200){
-    navigate('/admin')
   }
-  
-}
+
+
+  const handlePrice = (event) => {
+    setNewOrder({ ...newOrder, price: event.target.value })
+  }
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const response = await fetch(`/orders/${orderDetail.id}`, {
+      method: "PATCH",
+      headers: {
+        "content-Type": "application/json",
+      },
+      body: JSON.stringify({ newOrder: newOrder })
+    })
+    const received = await response.json()
+    console.log(received)
+    if (received.status == 200) {
+      navigate('/admin')
+    }
+
+  }
 
   return (
     <FormArea className="form-area" >
       <p>Order : {orderDetail.id}</p>
-    
+
       {Object.keys(selectedPizza).length > 1 ? (
         <form onSubmit={handleSubmit}>
           <label htmlFor="fname">First Name: <input type="text" id='fname' name='fname' placeholder='fabio' disabled value={orderDetail.fname} /></label>
           <label htmlFor="sname">Surname: <input type="text" id='lname' name='lname' placeholder='lopez' disabled value={orderDetail.lname} /></label>
-          <label htmlFor="address">Address: <input type="text" id='address' name='address' placeholder='London Town' value={orderDetail.address} disabled/></label>
-          <label htmlFor="email">Email: <input type="email" id='email' name='email' placeholder='fabio.lopez@email.com'  value={orderDetail.email} disabled /></label>
+          <label htmlFor="address">Address: <input type="text" id='address' name='address' placeholder='London Town' value={orderDetail.address} disabled /></label>
+          <label htmlFor="email">Email: <input type="email" id='email' name='email' placeholder='fabio.lopez@email.com' value={orderDetail.email} disabled /></label>
           <label htmlFor="tel">Telephone <input type="tel" id='phone' name='phone' placeholder='111-111-1111' disabled value={orderDetail.phone} /></label>
 
           <label htmlFor="pizzas">
@@ -109,7 +114,7 @@ const handleSubmit = async (e) => {
           <label htmlFor="price">Price: {Object.keys(selectedPizza.price).map(p => {
             return (
               <div className='radioarea'>
-                { disabled ? <input type="radio" name='price' value={selectedPizza.price[p]} checked={selectedPizza.price[p] === orderDetail.price} disabled={disabled} /> : <input type="radio" name='price' disabled={disabled} value={selectedPizza.price[p]} onChange={handlePrice}/> }
+                {disabled ? <input type="radio" name='price' value={selectedPizza.price[p]} checked={selectedPizza.price[p] === orderDetail.price} disabled={disabled} /> : <input type="radio" name='price' disabled={disabled} value={selectedPizza.price[p]} onChange={handlePrice} />}
                 <p>{p}</p>
                 <p>{selectedPizza.price[p]}</p>
               </div>
@@ -121,7 +126,12 @@ const handleSubmit = async (e) => {
           {!disabled && (<button id='save-changes-btn' type='submit'>Save Changes</button>)}
         </form>
       ) : (<h1>Loading</h1>)}
-        <button onClick={handleUpdateOrder} >Update Order</button>
+      <div className="btn-area">
+        <button id='update-btn' onClick={handleUpdateOrder} >Update Order</button>
+        {!disabled ?  '' : <button>Delete Order</button>}
+      </div>
+
+
     </FormArea>
   )
 
@@ -141,7 +151,7 @@ form{
   border-radius:20px;
   /* box-shadow:10px 10px 5px lightblue; */
   box-shadow:10px 10px 5px #f77673;
-  border:1px solid #75f763;
+  border:1px solid green;
   width:500px;
   height:max-content;
   display:flex;
@@ -169,6 +179,12 @@ button {
   border-radius:20px;
   border:1px solid lightblue;
   background-color:white;
+}
+
+.btn-area{
+  width:30%;
+  margin:20px;
+  display:flex;
 }
 
 .radioarea{
