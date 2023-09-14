@@ -13,7 +13,7 @@ const OrderDetails = ({ pizzas }) => {
   const [disabled, setDisabled] = useState(true);
   const [newOrder, setNewOrder] = useState({})
   const navigate = useNavigate()
-
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
   const getPizzaById = async (id) => {
     const response = await fetch(`/pizzas/${id}`);
@@ -88,50 +88,78 @@ const OrderDetails = ({ pizzas }) => {
 
   }
 
+
+  const handleDelete = async (e) => {
+    const response = await fetch(`/orders/${orderDetail.id}`, {
+      method: "DELETE",
+    })
+    const deleteResponse = await response.json();
+    console.log(deleteResponse)
+    alert("successfully deleted")
+    navigate('/admin');
+
+  }
+
+  const handleNoDelete = () =>{
+    navigate(`/order/${id}`);
+    setShowConfirmation(false);
+  }
+
   return (
     <FormArea className="form-area" >
       <p>Order : {orderDetail.id}</p>
+      {showConfirmation ? (
+        <div>
+          <p>Do you confirm deletion?</p>
+          <button onClick={handleDelete}>Yes</button>
+          <button onClick={(handleNoDelete)}>No</button>
+          {/* <button onClick={()=> navigate(`/order/${id}`)}>No</button> */}
+        </div>
+      ) : (
 
-      {Object.keys(selectedPizza).length > 1 ? (
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="fname">First Name: <input type="text" id='fname' name='fname' placeholder='fabio' disabled value={orderDetail.fname} /></label>
-          <label htmlFor="sname">Surname: <input type="text" id='lname' name='lname' placeholder='lopez' disabled value={orderDetail.lname} /></label>
-          <label htmlFor="address">Address: <input type="text" id='address' name='address' placeholder='London Town' value={orderDetail.address} disabled /></label>
-          <label htmlFor="email">Email: <input type="email" id='email' name='email' placeholder='fabio.lopez@email.com' value={orderDetail.email} disabled /></label>
-          <label htmlFor="tel">Telephone <input type="tel" id='phone' name='phone' placeholder='111-111-1111' disabled value={orderDetail.phone} /></label>
 
-          <label htmlFor="pizzas">
-            Pizza:
-            <select name="pizza" id="" onChange={handleSelect} disabled={disabled} >
-              <option value={orderDetail.pizza}>{selectedPizza.name}</option>
-              {pizzas.status == 200 ? pizzas.data.map(pizza => {
+        <div>
+
+          {Object.keys(selectedPizza).length > 1 ? (
+            <form onSubmit={handleSubmit}>
+              <label htmlFor="fname">First Name: <input type="text" id='fname' name='fname' placeholder='fabio' disabled value={orderDetail.fname} /></label>
+              <label htmlFor="sname">Surname: <input type="text" id='lname' name='lname' placeholder='lopez' disabled value={orderDetail.lname} /></label>
+              <label htmlFor="address">Address: <input type="text" id='address' name='address' placeholder='London Town' value={orderDetail.address} disabled /></label>
+              <label htmlFor="email">Email: <input type="email" id='email' name='email' placeholder='fabio.lopez@email.com' value={orderDetail.email} disabled /></label>
+              <label htmlFor="tel">Telephone <input type="tel" id='phone' name='phone' placeholder='111-111-1111' disabled value={orderDetail.phone} /></label>
+
+              <label htmlFor="pizzas">
+                Pizza:
+                <select name="pizza" id="" onChange={handleSelect} disabled={disabled} >
+                  <option value={orderDetail.pizza}>{selectedPizza.name}</option>
+                  {pizzas.status == 200 ? pizzas.data.map(pizza => {
+                    return (
+                      <option value={pizza.id}>{pizza.name}</option>
+                    )
+                  }) : <h1>Loading</h1>}
+                </select>
+              </label>
+              <label htmlFor="price">Price: {Object.keys(selectedPizza.price).map(p => {
                 return (
-                  <option value={pizza.id}>{pizza.name}</option>
+                  <div className='radioarea'>
+                    {disabled ? <input type="radio" name='price' value={selectedPizza.price[p]} checked={selectedPizza.price[p] === orderDetail.price} disabled={disabled} /> : <input type="radio" name='price' disabled={disabled} value={selectedPizza.price[p]} onChange={handlePrice} />}
+                    <p>{p}</p>
+                    <p>{selectedPizza.price[p]}</p>
+                  </div>
                 )
-              }) : <h1>Loading</h1>}
-            </select>
-          </label>
-          <label htmlFor="price">Price: {Object.keys(selectedPizza.price).map(p => {
-            return (
-              <div className='radioarea'>
-                {disabled ? <input type="radio" name='price' value={selectedPizza.price[p]} checked={selectedPizza.price[p] === orderDetail.price} disabled={disabled} /> : <input type="radio" name='price' disabled={disabled} value={selectedPizza.price[p]} onChange={handlePrice} />}
-                <p>{p}</p>
-                <p>{selectedPizza.price[p]}</p>
-              </div>
-            )
-          })}</label>
-          {errorMessage.length > 0 && <div className='errormessages'>
-            <p>{errorMessage}</p>
-          </div>}
-          {!disabled && (<button id='save-changes-btn' type='submit'>Save Changes</button>)}
-        </form>
-      ) : (<h1>Loading</h1>)}
-      <div className="btn-area">
-        <button id='update-btn' onClick={handleUpdateOrder} >Update Order</button>
-        {!disabled ?  '' : <button>Delete Order</button>}
-      </div>
-
-
+              })}</label>
+              {errorMessage.length > 0 && <div className='errormessages'>
+                <p>{errorMessage}</p>
+              </div>}
+              {!disabled && (<button id='save-changes-btn' type='submit'>Save Changes</button>)}
+            </form>
+          ) : (<h1>Loading</h1>)}
+          <div className="btn-area">
+            <button id='update-btn' onClick={handleUpdateOrder} disabled={!disabled} >Update Order</button>
+            {!disabled ? '' : <button onClick={() => setShowConfirmation(true)}>Delete Order</button>}
+          </div>
+        </div>
+      )}
     </FormArea>
   )
 
