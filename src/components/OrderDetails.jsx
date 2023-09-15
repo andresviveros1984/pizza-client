@@ -106,11 +106,11 @@ const OrderDetails = ({ pizzas }) => {
   }
 
   return (
-    <FormArea className="form-area" >
+    <>
       <p>Order : {orderDetail.id}</p>
       {showConfirmation ? (
         <div>
-          <p>Do you confirm deletion?</p>
+          <p style={{color:'red'}}>You want to delete this order?</p>
           <button onClick={handleDelete}>Yes</button>
           <button onClick={(handleNoDelete)}>No</button>
           {/* <button onClick={()=> navigate(`/order/${id}`)}>No</button> */}
@@ -118,7 +118,7 @@ const OrderDetails = ({ pizzas }) => {
       ) : (
 
 
-        <div>
+        <FormArea className="form-area">
 
           {Object.keys(selectedPizza).length > 1 ? (
             <form onSubmit={handleSubmit}>
@@ -158,9 +158,9 @@ const OrderDetails = ({ pizzas }) => {
             <button id='update-btn' onClick={handleUpdateOrder} disabled={!disabled} >Update Order</button>
             {!disabled ? '' : <button onClick={() => setShowConfirmation(true)}>Delete Order</button>}
           </div>
-        </div>
+        </FormArea>
       )}
-    </FormArea>
+    </>
   )
 
 }
