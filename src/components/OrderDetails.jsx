@@ -100,7 +100,7 @@ const OrderDetails = ({ pizzas }) => {
 
   }
 
-  const handleNoDelete = () =>{
+  const handleNoDelete = () => {
     navigate(`/order/${id}`);
     setShowConfirmation(false);
   }
@@ -109,12 +109,14 @@ const OrderDetails = ({ pizzas }) => {
     <>
       <p>Order : {orderDetail.id}</p>
       {showConfirmation ? (
-        <div>
-          <p style={{color:'red'}}>You want to delete this order?</p>
-          <button onClick={handleDelete}>Yes</button>
-          <button onClick={(handleNoDelete)}>No</button>
+        <FormArea className='delete-order-section'>
+          <p style={{ color: 'red' }}>You want to delete this order?</p>
+          <div id='buttons'>
+            <button onClick={handleDelete}>Yes</button>
+            <button onClick={(handleNoDelete)}>No</button>
+          </div>
           {/* <button onClick={()=> navigate(`/order/${id}`)}>No</button> */}
-        </div>
+        </FormArea>
       ) : (
 
 
@@ -231,7 +233,19 @@ button {
   color:red;
 }
 
+#buttons {
+  width:400px;
+}
 
+#buttons button{
+  /* border:1px solid red; */
+  width:100px;
+  margin:20px;
+  padding:10px;
+  border-radius:20px;
+  border:1px solid lightblue;
+  background-color:white;
+}
 
 `
 
